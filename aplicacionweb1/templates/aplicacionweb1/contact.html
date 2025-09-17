@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% comment %}
+{% Este es un comentario %}
+{% endcomment %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Mostrar</button>
+  </form>
+{% endblock %}

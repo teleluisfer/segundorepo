@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<script language="javascript">
+//window.onload=start
+window.onload=inicio
+
+function inicio(){
+	var a=document.getElementById("divrepgeneral");
+        a.style.display = 'none';
+	var b=document.getElementById("divrepconferencia");
+        b.style.display = 'none';
+	var c=document.getElementById("divtiemposporagente");
+        c.style.display = 'none';
+        var d=document.getElementById("divfecha1");
+        d.style.display = 'inline';
+        var e=document.getElementById("divfecha2");
+        e.style.display = 'inline';
+	var f=document.getElementById("divreptotal");
+        f.style.display = 'none';
+	Asesores();
+}
+
+function start(){
+	var a=document.getElementById("divrepconferencia");
+        a.style.display = 'none';
+        //var login=document.getElementById("login").innerHTML;
+        //$.getJSON("gestor-jmysql.php",{ cuenta: login }, logica );
+        var login="";
+        $.getJSON("reporteria-jmysql.php",{ cuenta: login }, principal );
+}
+
+function principal(json){
+        var tb=document.getElementById("tbgeneral");
+        var ids=document.getElementById("idsubmit");
+        for(i=0 ; i<json.length ; i++){
+                //total+=Number(res[i]);
+		console.log("principal: json[i].ncompleto="+json[i].ncompleto);
+                var tr   = document.createElement("tr");
+                var td0  = document.createElement("td");
+                var td01 = document.createElement("td");
+                var td1  = document.createElement("td");
+                var td2  = document.createElement("td");
+                var td3  = document.createElement("td");
+                var td4  = document.createElement("td");
+                var td5  = document.createElement("td");
+                var td6  = document.createElement("td");
+                var td7  = document.createElement("td");
+                var td8  = document.createElement("td");
+                var td9  = document.createElement("td");
+                var td10 = document.createElement("td");
+                var td11 = document.createElement("td");
+                var td12 = document.createElement("td");
+                var td14 = document.createElement("td");
+                var td15 = document.createElement("td");
+                var td16 = document.createElement("td");
+                var td17 = document.createElement("td");
+                var td18 = document.createElement("td");
+                var td19 = document.createElement("td");
+                var td20 = document.createElement("td");
+                var tdChk= document.createElement("td");
+                var a1   = document.createElement("a");
+                var tn0  = document.createTextNode(json[i].id);
+                var tn01 = document.createTextNode(json[i].fechagestion);
+                var tn1  = document.createTextNode(json[i].ncompleto);
+                var tn2  = document.createTextNode(json[i].ncelular);
+                var tn3  = document.createTextNode(json[i].colegio);
+                var tn4  = document.createTextNode(json[i].ncasa);
+                var tn5  = document.createTextNode(json[i].grado);
+                var tn6  = document.createTextNode(json[i].seccion);
+                var tn7  = document.createTextNode(json[i].sector);
+                var tn8  = document.createTextNode(json[i].fechaconf);
+                var tn9  = document.createTextNode(json[i].codigo);
+                var tn10 = document.createTextNode(json[i].estado);
+                var tn11 = document.createTextNode(json[i].agendadofecha);
+                var tn12 = document.createTextNode(json[i].resultado);
+                var tn14 = document.createTextNode(json[i].extension);
+                var tn15 = document.createTextNode(json[i].gruposuper);
+                var tn16 = document.createTextNode(json[i].nombre_ap1);
+                var tn17 = document.createTextNode(json[i].telefono_ap1);
+                var tn18 = document.createTextNode(json[i].nombre_ap2);
+                var tn19 = document.createTextNode(json[i].telefono_ap2);
+                var tn20 = document.createTextNode(json[i].comentario);
+                var span20 = document.createElement('span');
+                var span21 = document.createElement('span');
+                var b1     = document.createElement('button');
+		var check  = document.createElement('input');
+		check.type = "checkbox";
+		check.name = "lista";
+		check.value= json[i].id;
+		check.id   = json[i].id;
+                span20.className = "glyphicon glyphicon-pencil";
+                span21.className = "glyphicon glyphicon-remove";
+                a1.href=json[i].enlace;
+		//http://IP/GestorPBF/grabaciones/inbound/
+                a1.id="ida"+i;
+                b1.setAttribute("data-toggle","modal");
+                b1.setAttribute("data-target","#modalDescargar");
+                b1.className="btn btn-info btn-sm";
+                b1.setAttribute("onclick","editarUsuario("+json[i].username+")");
+                //b1.setAttribute("onclick","editarUsuario("+json[i].username+")");
+                //a1.data-toggle="modal";
+                //a1.data-target="#myModal";
+                //a1.appendChild(span20);
+                td1.id="un"+i;
+                td0.appendChild(tn0);
+                td01.appendChild(tn01);
+                td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                td5.appendChild(tn5);
+                td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                td11.appendChild(tn11);
+                td12.appendChild(tn12);
+                td14.appendChild(tn14);
+                td15.appendChild(tn15);
+                td16.appendChild(tn16);
+                td17.appendChild(tn17);
+                td18.appendChild(tn18);
+                td19.appendChild(tn19);
+                td20.appendChild(tn20);
+                b1.innerHTML='Descargar';
+                //td20.appendChild(b1);
+                tdChk.appendChild(check);
+                tr.appendChild(td0);
+                tr.appendChild(td01);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(td11);
+                tr.appendChild(td12);
+                tr.appendChild(td14);
+                tr.appendChild(td15);
+                tr.appendChild(td16);
+                tr.appendChild(td17);
+                tr.appendChild(td18);
+                tr.appendChild(td19);
+                tr.appendChild(td20);
+                tr.appendChild(tdChk);
+                tb.appendChild(tr);
+        }
+}
+
+
+function principalTodos(json){
+        var tb=document.getElementById("tbtodos");
+	var ids=document.getElementById("idsubmit");
+	var treg='';
+	var regxp='';
+	var p='';
+	var tpag = '';
+        for(i=0 ; i<json.length ; i++){
+                //total+=Number(res[i]);
+		treg=json[i].totalregistros;
+		regxp=json[i].regxpagina;
+		p=json[i].pagina;
+		//console.log("principalTodos: json[i].ncompleto="+json[i].ncompleto+" ,treg="+treg+" ,regxp="+regxp+",p="+p);
+                var tr   = document.createElement("tr");
+                var td0  = document.createElement("td");
+                var td01 = document.createElement("td");
+                var td1  = document.createElement("td");
+                var td2  = document.createElement("td");
+                var td3  = document.createElement("td");
+                var td4  = document.createElement("td");
+                var td5  = document.createElement("td");
+                var td6  = document.createElement("td");
+                var td7  = document.createElement("td");
+                var td8  = document.createElement("td");
+                var td9  = document.createElement("td");
+                var td10 = document.createElement("td");
+                var td11 = document.createElement("td");
+                var td12 = document.createElement("td");
+                var td14 = document.createElement("td");
+                var td15 = document.createElement("td");
+                var td16 = document.createElement("td");
+                var td17 = document.createElement("td");
+                var td18 = document.createElement("td");
+                var td19 = document.createElement("td");
+                var td20 = document.createElement("td");
+                var td21 = document.createElement("td");
+                var tdChk= document.createElement("td");
+                var a1   = document.createElement("a");
+                var tn0  = document.createTextNode(json[i].id);
+                var tn01 = document.createTextNode(json[i].fechagestion);
+                var tn1  = document.createTextNode(json[i].ncompleto);
+                var tn2  = document.createTextNode(json[i].ncelular);
+                var tn3  = document.createTextNode(json[i].colegio);
+                var tn4  = document.createTextNode(json[i].ncasa);
+                //var tn5  = document.createTextNode(json[i].grado);
+                //var tn6  = document.createTextNode(json[i].seccion);
+                var tn7  = document.createTextNode(json[i].sector);
+                var tn8  = document.createTextNode(json[i].fechaconf);
+                var tn9  = document.createTextNode(json[i].codigo);
+                var tn10 = document.createTextNode(json[i].estado);
+                var tn11 = document.createTextNode(json[i].agendadofecha);
+                var tn12 = document.createTextNode(json[i].resultado);
+                var tn14 = document.createTextNode(json[i].extension);
+                var tn15 = document.createTextNode(json[i].gruposuper);
+                var tn16 = document.createTextNode(json[i].nombre_ap1);
+                var tn17 = document.createTextNode(json[i].telefono_ap1);
+                var tn18 = document.createTextNode(json[i].nombre_ap2);
+                var tn19 = document.createTextNode(json[i].telefono_ap2);
+                var tn20 = document.createTextNode(json[i].comentario);
+                var span20 = document.createElement('span');
+                var span21 = document.createElement('span');
+                var b1     = document.createElement('button');
+                var b2     = document.createElement('input');
+		var check  = document.createElement('input');
+		let cadena = ""+json[i].extension+"|"+json[i].colegio+"|"+json[i].codigo+"|"+json[i].ncompleto+"|"+json[i].fechaconf+"|"+json[i].finalres+"|"+json[i].estado+"|"+json[i].gruposuper+"|"+json[i].sector+"|"+json[i].nombre_ap1+"|"+json[i].telefono_ap1+"|"+json[i].nombre_ap2+"|"+json[i].telefono_ap2;
+		let cadena2=[];
+		cadena2[0]=json[i].id;
+		cadena2[1]=json[i].colegio;
+		cadena2[2]=json[i].codigo;
+		cadena2[3]=json[i].ncompleto;
+		check.type = "checkbox";
+		check.name = "lista";
+		check.value= json[i].id;
+		check.id   = json[i].id;
+                span20.className = "glyphicon glyphicon-pencil";
+                span21.className = "glyphicon glyphicon-remove";
+                a1.href=json[i].enlace;
+		//http://IP/GestorPBF/grabaciones/inbound/
+                a1.id="ida"+i;
+                b1.setAttribute("data-toggle","modal");
+                b1.setAttribute("data-target","#modalDescargar");
+                b1.className="btn btn-info btn-sm";
+                b1.setAttribute("onclick","editarUsuario("+json[i].username+")");
+                //b1.setAttribute("onclick","editarUsuario("+json[i].username+")");
+                //a1.data-toggle="modal";
+                //a1.data-target="#myModal";
+		//a1.appendChild(span20);
+		b2.setAttribute('type', 'button');
+		b2.value="Ver";
+                b2.setAttribute("data-toggle","modal");
+                b2.setAttribute("data-target","#modalVer");
+                b2.className="btn btn-info btn-sm";
+                //b2.setAttribute("onclick","verDetalles("+json[i].id+")");
+		console.log("************ principalTodos: id: "+json[i].id);
+		b2.setAttribute("onclick","verDetalles("+json[i].id+")");
+                td1.id="un"+i;
+                td0.appendChild(tn0);
+                td01.appendChild(tn01);
+                td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                //td5.appendChild(tn5);
+                //td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                td11.appendChild(tn11);
+                td12.appendChild(tn12);
+                td14.appendChild(tn14);
+                td15.appendChild(tn15);
+                td16.appendChild(tn16);
+                td17.appendChild(tn17);
+                td18.appendChild(tn18);
+                td19.appendChild(tn19);
+                td20.appendChild(tn20);
+                td21.appendChild(b2);
+                b1.innerHTML='Descargar';
+                //td20.appendChild(b1);
+                tdChk.appendChild(check);
+                tr.appendChild(td0);
+                tr.appendChild(td01);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                //tr.appendChild(td5);
+                //tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(td11);
+                tr.appendChild(td12);
+                tr.appendChild(td14);
+                tr.appendChild(td15);
+                tr.appendChild(td16);
+                tr.appendChild(td17);
+                tr.appendChild(td18);
+                tr.appendChild(td19);
+                //tr.appendChild(td20);
+                tr.appendChild(tdChk);
+                tr.appendChild(td21);
+                tb.appendChild(tr);
+	}
+	tpag = Math.ceil(treg/regxp);
+	console.log("principalTodos: total_paginas="+tpag);
+	creaPaginacion(tpag,p,regxp);
+}
+
+
+function getReportes2(json){
+        var tb=document.getElementById("tbRepTiemposxAgente");
+	var ids=document.getElementById("idsubmit");
+        for(i=0 ; i<json.length ; i++){
+                console.log("getReportes2: json[i].nombre="+json[i].nombre);
+                console.log("getReportes2: json[i].query="+json[i].query);
+                var tr   = document.createElement("tr");
+                var td1  = document.createElement("td");
+                var td2  = document.createElement("td");
+                var td3  = document.createElement("td");
+                var td4  = document.createElement("td");
+                var td5  = document.createElement("td");
+                var td6  = document.createElement("td");
+                var td7  = document.createElement("td");
+                var td8  = document.createElement("td");
+                var td9  = document.createElement("td");
+                var td10 = document.createElement("td");
+                var td11 = document.createElement("td");
+                var tn1  = document.createTextNode(json[i].contactos);
+                var tn2  = document.createTextNode(json[i].nombre);
+                var tn3  = document.createTextNode(json[i].agente);
+                var tn4  = document.createTextNode(json[i].tmring);
+                var tn5  = document.createTextNode(json[i].tconversacion);
+                var tn6  = document.createTextNode(json[i].tmconversacion);
+                var tn7  = document.createTextNode(json[i].tdescanso);
+                var tn8  = document.createTextNode(json[i].tmdescanso);
+                var tn9 = document.createTextNode(json[i].tgestion);
+                var tn10 = document.createTextNode(json[i].tacw);
+                var tn11 = document.createTextNode(json[i].tmacw);
+                td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                td5.appendChild(tn5);
+                td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                td11.appendChild(tn11);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(td11);
+                tb.appendChild(tr);
+        }
+}
+
+
+
+
+function descargar(){
+
+}
+
+
+function Asesores(){
+        var gr=document.getElementById("tipousuario").innerHTML;
+	console.log("Asesores:grupo="+gr);
+        $.getJSON("reporteria-getAsesores.php",{ grupo: gr }, obtieneAsesores );
+}
+function obtieneAsesores(json){
+        //var fn=json[0].finalres;
+        document.getElementById("asesores").innerHTML = "";
+        var select = document.getElementById("asesores");
+
+                        console.log("obtieneAsesores:");
+                        var opt0 = document.createElement('option');
+                        opt0.id = "Todos";
+                        opt0.value = "Todos";
+                        opt0.appendChild( document.createTextNode("Todos"));
+                        //opt0.disabled = true;
+                        opt0.selected = true;
+			select.appendChild(opt0);
+                        for(i=0 ; i<json.length ; i++){
+                                var opt = document.createElement('option');
+                                opt.appendChild( document.createTextNode(json[i].usuario) );
+                                opt.value = json[i].usuario;
+                                //opt.id    = json[i].;
+                                select.appendChild(opt);
+                        }
+}
+
+
+function checkReporte(){
+	var fin=document.getElementById("reporte").value;
+        console.log("checkReporte:final="+fin);
+        if(fin=='1'){
+                //document.getElementById("finales").selectedIndex     = "0";
+                //document.getElementById("finales").readOnly     = true;
+        	var c=document.getElementById("divfecha1");
+	        c.style.display = 'inline';
+	        var d=document.getElementById("divfecha2");
+	        d.style.display = 'inline';
+                document.getElementById("finales").disabled     = true;
+		//alert("finaaaaal");
+	}else if(fin=='3'){
+        	var c=document.getElementById("divfecha1");
+	        c.style.display = 'inline';
+	        var d=document.getElementById("divfecha2");
+	        d.style.display = 'inline';
+                document.getElementById("finales").disabled     = false;
+	}	
+
+}
+
+function reportes(){
+        document.getElementById("tbgeneral").innerHTML="";
+        document.getElementById("tbconfer").innerHTML="";
+        document.getElementById("tbRepTiemposxAgente").innerHTML="";
+        document.getElementById("tbtodos").innerHTML="";
+        document.getElementById("ulpaginacion").innerHTML="";
+        var A=document.getElementById("divrepgeneral");
+        A.style.display = 'none';
+        var B=document.getElementById("divrepconferencia");
+        B.style.display = 'none';
+        var C=document.getElementById("divtiemposporagente");
+        C.style.display = 'none';
+        var D=document.getElementById("divreptotal");
+        D.style.display = 'none';
+        var programa="";
+        var reporte=document.getElementById("reporte").value;
+	var usu    =document.getElementById("usuario").value;
+	var pa = 1;
+	var li = 6;
+        switch(reporte){
+                case '1':
+        	  document.getElementById("finales").readOnly = true;
+                  var anexo='';
+                  console.log("reporte="+reporte);
+                  programa="reportes-logConferencias.php";
+                  var a=document.getElementById("divrepconferencia");
+                  a.style.display = 'inline';
+                  var sec=document.getElementById("sectores").value;
+                  var ase=document.getElementById("asesores").value;
+                  var f1=document.getElementById("fecha1").value;
+                  var f2=document.getElementById("fecha2").value;
+		  if(f1==''){ f1="2019-06-01";}
+		  if(f2==''){ f2="2022-12-30";}
+                  //alert("reportes: dentro de case:1");
+                  console.log("reportes:="+reporte+" sector="+sec);
+                  console.log("reportes:case 1:fecha1="+f1+" fecha2="+f2);
+                  $.getJSON(programa,{ cuenta:anexo ,sectores:sec ,usuario:usu ,asesores:ase, fecha1:f1, fecha2:f2 }, getRepConferencias );
+                  break;
+                case '2':
+                  var anexo='';
+                  console.log("reporte="+reporte);
+                  programa="reportes-tiemposdeEstadoPoragente.php";
+                  var b=document.getElementById("divtiemposporagente");
+                  b.style.display = 'inline';
+                  var f1=document.getElementById("fecha1").value;
+                  var f2=document.getElementById("fecha2").value;
+                  console.log("reportes:case 2:fecha1="+f1+" fecha2="+f2);
+                  $.getJSON(programa,{ cuenta:anexo , fecha1:f1, fecha2:f2 }, getReportes2 );
+                  break;
+                case '3':
+                  var anexo='';
+                  console.log("reporte="+reporte);
+                  programa="reporteria-jmysql.php";
+                  var c=document.getElementById("divrepgeneral");
+                  c.style.display = 'inline';
+                  var fin=document.getElementById("finales").value;
+                  var sec=document.getElementById("sectores").value;
+                  var ase=document.getElementById("asesores").value;
+                  //var f1=document.getElementById("fecha1").value+" 00:00:00";
+                  //var f2=document.getElementById("fecha2").value+" 23:59:59";
+                  var f1=document.getElementById("fecha1").value;
+                  var f2=document.getElementById("fecha2").value;
+		  if(f1==''){ f1="2019-06-01";}
+		  if(f2==''){ f2="2024-12-30";}
+                  console.log("reportes:case 3:reporte="+reporte+" finales="+fin+" sector="+sec+" asesores="+ase);
+                  console.log("reportes:case 3:fecha1="+f1+" fecha2="+f2);
+                  $.getJSON(programa,{ cuenta:anexo ,finales:fin , sectores:sec , usuario:usu , asesores:ase , fecha1:f1, fecha2:f2 }, principal );
+                  break;
+		  //break;
+		case '4':
+                  var anexo='';
+                  console.log("reporte="+reporte+" , pa="+pa+" li="+li);
+                  programa="reporteria-total.php";
+                  var c=document.getElementById("divreptotal");
+                  c.style.display = 'inline';
+                  //$.getJSON(programa,{ cuenta:anexo, pagina:pa, limite:li }, principalTodos );
+                  $.getJSON(programa,{ cuenta:anexo, pagina:pa, limite:li }, principalTodos );
+		  break;
+
+                default:
+                  break;
+        }
+        //var anexo='9530';
+        //$.getJSON(programa,{ cuenta:anexo }, getReportes1 );
+        //$.getJSON("reportes-logContactos.php",{ cuenta:anexo }, getReportes1 );
+}
+
+
+
+function getRepConferencias(json){
+        //var aa=document.getElementById("divrepconferencia");
+        //aa.style.display = 'inline';
+        //var b=document.getElementById("divrepgeneral");
+        //b.style.display = 'none';
+        var tb=document.getElementById("tbconfer");
+        for(i=0 ; i<json.length ; i++){
+                var tr   = document.createElement("tr");
+                var td0  = document.createElement("td");
+                var td1  = document.createElement("td");
+                var td2  = document.createElement("td");
+                var td3  = document.createElement("td");
+                var td4  = document.createElement("td");
+                var td5  = document.createElement("td");
+                var td6  = document.createElement("td");
+                var td7  = document.createElement("td");
+                var td8  = document.createElement("td");
+                var td9  = document.createElement("td");
+                var td10 = document.createElement("td");
+                var td11 = document.createElement("td");
+                var td12 = document.createElement("td");
+                var tdEditar  = document.createElement("td");
+                var tdChk     = document.createElement("td");
+                console.log("json.agente="+json[i].agente);
+                console.log("json.fecha="+json[i].fecha);
+                var tn0  = document.createTextNode(json[i].extension);
+                var tn1  = document.createTextNode(json[i].colegio);
+                var tn2  = document.createTextNode(json[i].codigo);
+                var tn3  = document.createTextNode(json[i].ncompleto);
+                var tn4  = document.createTextNode(json[i].fechaconf);
+                var tn5  = document.createTextNode(json[i].finalres);
+                var tn6  = document.createTextNode(json[i].estado);
+                var tn7  = document.createTextNode(json[i].gruposuper);
+                var tn8  = document.createTextNode(json[i].sector);
+                var tn9  = document.createTextNode(json[i].nombre_ap1);
+                var tn10 = document.createTextNode(json[i].telefono_ap1);
+                var tn11 = document.createTextNode(json[i].nombre_ap2);
+                var tn12 = document.createTextNode(json[i].telefono_ap2);
+		var tnEditar  = document.createTextNode("");
+		var check  = document.createElement('input');
+		check.type = "checkbox";
+		check.name = "lista";
+		check.value= json[i].id;
+		check.id   = json[i].id;
+                tr.className="active";
+                td0.appendChild(tn0);
+                td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                td5.appendChild(tn5);
+                td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                td11.appendChild(tn11);
+                td12.appendChild(tn12);
+                tdEditar.appendChild(tnEditar);
+                tdChk.appendChild(check);
+                tr.appendChild(td0);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(td11);
+                tr.appendChild(td12);
+                tr.appendChild(tdEditar);
+                tr.appendChild(tdChk);
+                tb.appendChild(tr);
+	}
+}
+
+
+function setUsado(){
+                 var items=document.getElementsByName('lista');
+                 var selectedItems="";
+                 for(var i=0; i<items.length; i++){
+                         if(items[i].type=='checkbox' && items[i].checked==true){
+                                 //selectedItems+=items[i].value+"\n";
+                                selectedItems+=items[i].value+"-";
+                                console.log(selectedItems);
+                                $.getJSON("reporteria-setUsado.php",{ tramaid: selectedItems }, reporteriaSetusado );
+                         }
+                }
+                 alert("Los registros fueron cambiados!");
+                 location.reload();
+}
+
+function reporteriaSetusado(json){
+}
+
+function setRegistroNuevo(){
+		var items=document.getElementsByName('lista');
+		var selectedItems="";
+		for(var i=0; i<items.length; i++){
+			if(items[i].type=='checkbox' && items[i].checked==true){
+				//selectedItems+=items[i].value+"\n";
+				selectedItems+=items[i].value+"-";
+				console.log(selectedItems);
+        			$.getJSON("reporteria-editar.php",{ tramaid: selectedItems }, reporteriaEditado );
+			}
+		}
+		alert("Los registros fueron cambiados!");
+		location.reload();
+}
+
+
+
+
+function reporteriaEditado(json){}
+
+
+
+function setRegistroEliminado(){
+                var items=document.getElementsByName('lista');
+		var selectedItems="";
+		var u=document.getElementById("usuariooculto").innerHTML;
+		console.log("setRegistroEliminado: usuario="+u);
+                for(var i=0; i<items.length; i++){
+                        if(items[i].type=='checkbox' && items[i].checked==true){
+                                //selectedItems+=items[i].value+"\n";
+                                selectedItems+=items[i].value+"-";
+                                console.log(selectedItems);
+                                $.getJSON("reporteria-eliminado.php",{ tramaid: selectedItems ,usuario: u  }, reporteriaEditado2 );
+                        }
+                }
+                alert("Los registros fueron eliminados!");
+                location.reload();
+}
+
+
+
+
+function reporteriaEditado2(json){}
+
+
+function toggle(source) {
+  checkboxes = document.getElementsByName('lista');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+
+function setVentaFinal(){
+
+                var items=document.getElementsByName('lista');
+                var selectedItems="";
+                for(var i=0; i<items.length; i++){
+                        if(items[i].type=='checkbox' && items[i].checked==true){
+                                //selectedItems+=items[i].value+"\n";
+                                selectedItems+=items[i].value+"-";
+                                console.log(selectedItems);
+                                $.getJSON("reporteria-ventafinal.php",{ tramaid: selectedItems }, reporteriaVentafinal );
+                        }
+                }
+                //document.getElementById("reporte").selectedIndex     = "0";
+                alert("Los registros fueron cambiados!");
+                location.reload();
+}
+
+
+function setVentaConf(){
+
+                var items=document.getElementsByName('lista');
+                var selectedItems="";
+                for(var i=0; i<items.length; i++){
+                        if(items[i].type=='checkbox' && items[i].checked==true){
+                                //selectedItems+=items[i].value+"\n";
+                                selectedItems+=items[i].value+"-";
+                                console.log(selectedItems);
+                                $.getJSON("reporteria-ventafinal.php",{ tramaid: selectedItems }, reporteriaVentafinal );
+                        }
+                }
+		//document.getElementById("reporte").selectedIndex     = "0";
+		alert("Los registros fueron cambiados!");
+		location.reload();
+}
+
+function obtieneSelect(){
+        document.getElementById("tbtodos").innerHTML="";
+	var e = document.getElementById("selectRepTotal");
+	var value = e.value;
+	var text = e.options[e.selectedIndex].text;
+	console.log("obtieneSelect: value:"+value+" , text:"+text);
+        var a=document.getElementById("divreptotal");
+	a.style.display = 'none';
+        console.log("reporte="+reporte);
+        programa="reporteria-total.php";
+        var c=document.getElementById("divreptotal");
+        c.style.display = 'inline';
+        $.getJSON(programa,{ id:value }, principalTodos );
+}
+
+/* ver detalles de un registro en un modal elegido de la lista del reporte total */
+function verDetalles(id){
+	console.log("verDetalles: id="+id);
+        programa="reporteria-verDetallesTotal.php";
+        $.getJSON(programa,{ id:id }, getverDetalles );
+}
+
+function getverDetalles(json){
+	console.log("getverDetalles: id="+json[0]+" ncompleto="+json[1]+" ncelular="+json[2]);
+        document.getElementById("idver").innerHTML=json[0];
+        document.getElementById("cclientever").value=json[1];
+        document.getElementById("ncompletover").value=json[2];
+        document.getElementById("extensionver").value=json[3];
+        document.getElementById("telefono1ver").value=json[4];
+        document.getElementById("telefono2ver").value=json[5];
+        document.getElementById("colegiover").value=json[6];
+        document.getElementById("gradover").value=json[7];
+        document.getElementById("seccionver").value=json[8];
+        document.getElementById("nombreap1ver").value=json[9];
+        document.getElementById("telefonoap1ver").value=json[10];
+        document.getElementById("nombreap2ver").value=json[11];
+        document.getElementById("telefonoap2ver").value=json[12];
+        document.getElementById("codigover").value=json[13];
+        document.getElementById("sectorver").value=json[14];
+        document.getElementById("estadover").value=json[15];
+        document.getElementById("nfinalver").value=json[16];
+        document.getElementById("agendadofver").value=json[17];
+        document.getElementById("agendadohver").value=json[18];
+        document.getElementById("fechaconfver").value=json[19];
+        document.getElementById("gruposuperver").value=json[20];
+        document.getElementById("comentariover").value=json[21];
+        document.getElementById("fechagestionver").value=json[22];
+}
+
+function selectPaginacion(pag,regxpagina){
+	var pa = pag;
+	document.getElementById("ulpaginacion").innerHTML="";
+	document.getElementById("tbtodos").innerHTML="";
+        //var A=document.getElementById("divreptotal");
+	//A.style.display = 'none';
+	var anexo='';
+        console.log("selectPaginacion: pag="+pag+" , li="+regxpagina);
+        programa="reporteria-total.php";
+        var c=document.getElementById("divreptotal");
+        c.style.display = 'inline';
+        //$.getJSON(programa,{ cuenta:anexo, pagina:pa, limite:li }, principalTodos );
+        $.getJSON(programa,{ cuenta:anexo, pagina:pa, limite:regxpagina }, principalTodos );
+}
+
+function creaPaginacion(tpag,pagina,regxpagina){
+	var ul = document.getElementById("ulpaginacion");
+	console.log("creaPaginacion: pagina="+pagina);
+	var total_paginas = tpag;
+	var diferencia = total_paginas - pagina;
+	var start_loop = pagina;
+	if( diferencia <= 5){
+		start_loop = total_paginas - 5;
+	}
+	var end_loop = start_loop + 4;
+	var li = document.createElement("li");
+
+	var aprimera = document.createElement('a');
+	var textprimera = document.createTextNode("Primera");
+	aprimera.appendChild(textprimera);	
+	aprimera.setAttribute("onclick","selectPaginacion(1,"+regxpagina+")");
+	aprimera.className="page-link";
+
+	var aatras = document.createElement('a');
+	var textatras = document.createTextNode("<<<");
+	aatras.appendChild(textatras);
+	aatras.setAttribute("onclick","selectPaginacion("+pagina+","+regxpagina+")");
+	aatras.className="page-link";
+
+	var aultima = document.createElement('a');
+	var textultima = document.createTextNode("Ultima");
+	aultima.appendChild(textultima);
+	aultima.setAttribute("onclick","selectPaginacion("+tpag+","+regxpagina+")");
+	aultima.className="page-link";
+
+	var aadelante = document.createElement('a');
+	var textadelante = document.createTextNode(">>>");
+	aadelante.appendChild(textadelante);
+	var next=0;
+	next=parseInt(pagina)+parseInt(1);
+	aadelante.setAttribute("onclick","selectPaginacion("+next+","+regxpagina+")");
+	aadelante.className="page-link";
+
+	/* Primera y <<< */
+	if(pagina > 1){
+		li.appendChild(aprimera);
+		li.appendChild(aatras);
+	}
+
+	/* para total de paginas mayores de 5 se mostrara una paginacion, para menores de 5 otra*/
+	if(tpag>4){
+		for (var i = start_loop; i <= end_loop; i++) {
+			var aloop = document.createElement('a');
+			var textloop = document.createTextNode(i);
+			aloop.appendChild(textloop);
+			aloop.setAttribute("onclick","selectPaginacion("+pagina+","+regxpagina+")");
+			aloop.className="page-link";
+			li.appendChild(aloop);
+			//echo "<a class='pagina' href='pagina.php?pagina=".$i."'>".$i."</a>";
+		}
+
+	}else{
+		end_loop=tpag;
+		start_loop=1;
+		for (var i = start_loop; i <= end_loop; i++) {
+			var aloop = document.createElement('a');
+			var textloop = document.createTextNode(i);
+			aloop.appendChild(textloop);
+			aloop.setAttribute("onclick","selectPaginacion("+i+","+regxpagina+")");
+			aloop.className="page-link";
+			li.appendChild(aloop);
+			//echo "<a class='pagina' href='pagina.php?pagina=".$i."'>".$i."</a>";
+		}
+	}
+	/*  >>> y Ultima */
+	if(pagina < end_loop){
+		li.appendChild(aadelante);
+		li.appendChild(aultima);
+	}
+	
+	ul.appendChild(li);
+		
+}
+
+
+function reporteriaVentafinal(json){}
+
+function setVenta(){}
+
+
+$(function(){
+            $("#exportRepconf").click(function(){
+                $("#tablaRepconf").tableToCSV();
+            });
+});
+
+$(function(){
+            $("#exportRepgen").click(function(){
+                $("#tablaRepgen").tableToCSV();
+            });
+});
+
+
+
+</script>
+<title>:: Unicall ::</title>
+</head>
+<body>
+
+<div class="panel panel-info">
+
+  <div class="panel-body">
+	<!--img src="imagenes/unicall-azul.png"/-->
+
+	<div class="pull-right">
+                       <span class="panel-title btn-group">
+	                    <button id="usuariooculto"  type="button" class="btn btn-sm"><?php echo $login_session;?></button>
+	                    <button id="nlogin" ng-disabled="underCreation" type="button" class="btn btn-sm">
+                            <span  class="text-primary"><strong id="tipousuario"><?php echo $tipo_session.": ".$nombre_session; ?></strong></span>
+                            </button>
+
+                            <button ng-disabled="underCreation" type="button" class="btn btn-default btn-sm" ng-click="addUser()">
+                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                <span class="text-primary"><strong>Usuario:<?php echo $login_session; ?></strong></span>
+                            </button>
+                            <button ng-disabled="underCreation" type="button" class="btn btn-default btn-sm" ng-click="addUser()">
+                                <span class="glyphicon glyphicon-off text-primary"></span>
+                                <span class="text-primary"><strong><a href="logout.php">Cerrar sesión</a></strong></span>
+                            </button>
+                        </span>
+	</div>
+  </div>
+
+  <div class="panel-footer">
+
+	<ul class="nav nav-tabs">
+	<?php
+                $tabs=getPestanas($tipo_session,$login_session);
+                for($j=0;$j<count($tabs);$j++){
+                        echo $tabs[$j];
+                }
+                ?>
+
+	</ul>
+
+        <!--div class="panel-group"-->
+
+	<div class="panel panel-info">
+		<div class="panel-heading">
+                        <h3 class="panel-title">Reportes:</h3>
+  		</div>
+		<div class="panel-body">
+
+<!--===============================FORMULARIO PRINCIPAL================================================= -->
+	<div class="row">
+	  <div class="col-sm-4">
+
+                <!--form id="form1" class="form-horizontal" -->
+                <div class="form-horizontal" >
+			<div class="form-group">
+                                <label for="reporte" class="control-label col-md-4">Reportes:</label>
+                                <div class="col-md-8">
+                                        <select class="form-control" id="reporte" name="reporte">
+                                        <!--select class="form-control" id="reporte" name="reporte" onchange="reportes()"-->
+                                        <!--select class="form-control" id="reporte" name="reporte" onchange="checkReporte()"-->
+                                        <option disabled="disabled" selected="selected">Seleccionar</option>
+                                        <option value="1">Conferencias</option>
+                                        <option value="2">Tiempos de estado por agente</option>
+                                        <option value="3">Reporte General</option>
+                                        <option value="4">Base completa</option>
+                                        </select>
+                                </div>
+                        </div>
+
+			<div class="form-group">
+                                <label for="finales" class="control-label col-md-4">Finales:</label>
+                                <div class="col-md-8">
+                                        <select class="form-control" id="finales" name="finales">
+                                        <option selected="selected" value="Todos">Todos</option>
+					<?php
+                                                                $lista=getFinales();
+                                                                for($j=0;$j<count($lista);$j++){
+                                                                        echo $lista[$j];
+                                                                }
+                                        ?>
+
+                                        </select>
+                                </div>
+                        </div>
+
+
+			<div class="form-group">
+                                <label for="sectores" class="control-label col-md-4">Sectores:</label>
+                                <div class="col-md-8">
+                                        <select class="form-control" id="sectores" name="sectores">
+                                        <option selected="selected" value="Todos">Todos</option>
+                                        <?php
+                                                                $lista=getSectoresActivos();
+                                                                for($j=0;$j<count($lista);$j++){
+                                                                        echo $lista[$j];
+                                                                }
+                                        ?>
+
+                                        </select>
+                                </div>
+                        </div>
+
+			<div class="form-group">
+                                <label for="asesores" class="control-label col-md-4">Asesores:</label>
+                                <div class="col-md-8">
+                                        <select class="form-control" id="asesores" name="asesores">
+                                        </select>
+                                </div>
+                        </div>
+
+
+                        <div id="divfecha1" class="form-group">
+                            <label for="fecha1" class="control-label col-md-4">Fecha inicial:</label>
+                            <div class="col-md-8">
+                            <input class="form-control" id="fecha1" type="date" name="fecha1" value="">
+                            </div>
+                        </div>
+
+                        <div id="divfecha2"  class="form-group">
+                            <label for="fecha2" class="control-label col-md-4">Fecha final:</label>
+                            <div class="col-md-8">
+                            <input class="form-control" id="fecha2" type="date" name="fecha2" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usuario" class="control-label col-md-4">Usuario:</label>
+                            <div class="col-md-8">
+                            <input class="form-control" id="usuario" type="text" name="usuario" value="<?php echo $tipo_session.":". $nombre_session;?>" readonly>
+                            </div>
+                        </div>
+
+
+
+                        <button class="btn btn-info btn-sm" name="submit1" value="submit1" onclick="reportes()">Buscar</button>
+                <!--/form-->
+	  	</div>
+	  </div>
+	  <div class="col-sm-8"></div>
+	</div><!--row -->
+
+
+
+<!--===============================REPORTE GENERAL============================================ -->
+
+<div id="divrepgeneral"  class="container-fluid">
+
+
+	
+	<button type="submit" class="btn btn-success btn-sm" name="cambiarRN" value=""  onclick="setRegistroNuevo()">cambiar a registro Nuevo</button>
+	<button type="submit" class="btn btn-success btn-sm" name="cambiarRE" value=""  onclick="setRegistroEliminado()">cambiar a registro Eliminado</button>
+	<button   class="btn btn-success btn-sm"  id="exportRepgen" data-export="exportRepgen" autofocus>Exportar a CSV</button>
+
+	<div class="table-responsive">
+	<table  id="tablaRepgen" class="table table-bordered table-hover table-condensed">
+	<thead>
+      	<tr class="info">
+        	<th>ID</th>
+        	<th>Gestión</th>
+        	<th>Nombre</th>
+	        <th>Celular</th>
+	        <th>Colegio</th>
+	        <th># Casa</th>
+	        <th>Grado</th>
+	        <th>Secc.</th>
+	        <th>Sector</th>
+	        <th>Fecha conf.</th>
+	        <th>Código</th>
+	        <th>Estado</th>
+	        <th>Agendado</th>
+	        <th>Final</th>
+	        <th>Agente</th>
+	        <th>Grupo</th>
+	        <th>Nombre apod.1</th>
+	        <th>Telf. apod.1</th>
+	        <th>Nombre apod.2</th>
+	        <th>Telf. apod.2</th>
+	        <th>Comentario</th>
+	        <th><input type="checkbox" onClick="toggle(this)" /> Selec.<br/></th>
+        </tr>
+        </thead>
+	<tbody id="tbgeneral">
+	</tbody>
+	</table>
+	</div>
+</div> 
+
+<!--===============================REPORTE GENERAL TOTAL============================================ -->
+
+<div id="divreptotal"  class="container">
+
+	<div class="row justify-content-md-center">
+
+	<div class="col-6 espaciobotones"><button type="submit" class="btn btn-success btn-sm" name="cambiarRN" value="" onclick="setRegistroNuevo()">cambiar a registro Nuevo</button></div>
+	<div class="col-1 espaciobotones"><button type="submit" class="btn btn-success btn-sm" name="cambiarRE" value=""  onclick="setRegistroEliminado()">cambiar a registro Eliminado</button></div>
+	<div class="col-1 espaciobotones"><button   class="btn btn-success btn-sm"  id="exportRepgen" data-export="exportRepgen" autofocus>Exportar a CSV</button></div>
+	<div class="col-1">
+
+	<select id="selectRepTotal" class="selectpicker" data-show-subtext="true" data-live-search="true" onchange="obtieneSelect()")>
+	<?php
+	$contador=0;
+	$resbuscador=buscadorBd();
+        ?> 
+        <option>Buscar registro..</option> 
+        <?php	while($misdatos = mysqli_fetch_assoc($resbuscador)){ $contador++;?>
+		<?php
+       		$cadena=$misdatos["ncompleto"].",".$misdatos["ccliente"].",".$misdatos["colegio"];
+		?>	
+		<option  data-subtext="<?php echo $cadena; ?>"><?php echo $misdatos["id"]; ?></option>
+		<?php }?>          
+	</select>
+
+	</div>
+
+	<div class="col-1 offset-2">
+		<label for="idregxpagina" class="control-label col-md-4">Mostrar:</label>
+	</div>
+	<div class="col-1 offset-2">
+		<input class="form-control" id="idregxpagina" type="text" name="idregxpagina" value=""  size="4" readonly>	
+	</div>
+	<div class="col-1 offset-2">
+		<label for="idregxpagina" class="control-label col-md-4">Resultados</label>
+	</div>
+
+
+	</div><!--row-->
+
+
+	<div class="row">
+	<div id="subdivreptotal" class="table-responsive">
+		<table  class="table table-striped">
+		<thead>
+      		<tr class="info">
+        		<th>Id</th>
+	        	<th>Gestion</th>
+        		<th>Nombre</th>
+	       		<th>Celular</th>
+		        <th>Colegio</th>
+		        <th>Tel. Casa</th>
+		        <!--0th>Grado</th>
+		        <th>Secc.</th-->
+		        <th>Sector</th>
+		        <th>Fecha conf.</th>
+		        <th>Codigo</th>
+		        <th>Estado</th>
+		        <th>Agendado</th>
+		        <th>Final</th>
+		        <th>Agente</th>
+		        <th>Grupo</th>
+		        <th>Nombre apod.1</th>
+		        <th>Telf. apod.1</th>
+		        <th>Nombre apod.2</th>
+		        <th>Telf. apod.2</th>
+		        <!--th>Comentario</th-->
+		        <th><input type="checkbox" onClick="toggle(this)" /> Selec.<br/></th>
+		        <th></th>
+	        </tr>
+	        </thead>
+		<tbody id="tbtodos">
+		</tbody>
+		</table>
+	</div>
+	</div>
+	<div class="row">
+		<ul id="ulpaginacion"  class="pagination pagination-lg">
+		<!--li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li-->
+                </ul>
+	</div>
+	
+</div>
+
+
+
+<!--===============================REPORTE DE CONFERENCIAS============================================ -->
+
+
+<div id="divrepconferencia" class="container-fluid">
+	<h2>
+	<button type="submit" class="btn btn-success btn-sm" name="cambiarVF" value=""  onclick="setVentaConf()">cambiar a venta final</button>
+	<button type="submit" class="btn btn-success btn-sm" name="cambiarRU" value=""  onclick="setUsado()">cambiar a registro usado</button>
+	<button   class="btn btn-success btn-sm"  id="exportRepconf" data-export="exportRepconf" autofocus>Exportar a CSV</button>
+	</h2>
+                        <h2></h2>
+                        <p></p>
+                        <div class="table-responsive">
+                                <table id="tablaRepconf" class="table table-bordered table-hover table-condensed">
+                                        <thead>
+                                                <tr class="info">
+                                                        <th>Agente</th>
+                                                        <th>Colegio</th>
+                                                        <th>Código</th>
+                                                        <th>Nombre</th>
+                                                        <th>Fecha de conf.</th>
+                                                        <th>Final</th>
+                                                        <th>Estado</th>
+                                                        <th>Grupo</th>
+                                                        <th>Sector</th>
+					        	<th>Nombre apod.1</th>
+			        			<th>Telf. apod.1</th>
+						        <th>Nombre apod.2</th>
+						        <th>Telf. apod.2</th>
+                                                        <th>Editar</th>
+	       						<th><input type="checkbox" onClick="toggle(this)" /> Seleccionar<br/></th>
+                                                </tr>
+                                        </thead>
+                                        <tbody id="tbconfer">
+                                        </tbody>
+                                </table>
+                        </div>
+</div><!--container -->
+
+<!--===============================REPORTE DE TIEMPOS POR AGENTE============================================ -->
+
+
+<div id="divtiemposporagente" class="container-fluid">
+        <h2>
+        <button   class="btn btn-success btn-sm"  id="exportRepTiemposxAgente" data-export="exportRepTiemposxAgente" autofocus>Exportar a CSV</button>
+        </h2>
+                        <h2></h2>
+                        <p></p>
+                        <div class="table-responsive">
+                                <table id="tablaRepTiemposxAgente" class="table table-bordered table-hover table-condensed">
+                                        <thead>
+                                                <tr class="info">
+                                                        <th>Contactabilidad</th>
+                                                        <th>Nombre</th>
+                                                        <th>Agente</th>
+                                                        <th>tmring</th>
+                                                        <th>tconversación</th>
+                                                        <th>tmconversación</th>
+                                                        <th>tdescanso</th>
+                                                        <th>tmdescanso</th>
+                                                        <th>tgestión</th>
+                                                        <th>tacw</th>
+                                                        <th>tmacw</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody id="tbRepTiemposxAgente">
+                                        </tbody>
+                                </table>
+                        </div>
+</div><!--container -->
+
+
+
+<!--===============================MODAL DE GRABACIONES================================================= -->
+
+
+
+
+<!--===============================MODAL VER DETALLES DE REGISTROS ================================================= -->
+
+
+<div class="modal fade" id="modalVer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registro de id = <label id="idver"></label> </h5>
+        <!--h5 class="modal-title" id="exampleModalLabel">Registro de id <input type="text" class="form-control" id="idver"  readonly> </h5-->
+          <!--button type="button" class="close" data-dismiss="modal" aria-label="Close"-->
+          <!--span aria-hidden="true">&times;</span-->
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div class="container">
+
+<div class="row justify-content-md-center">
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Codigo</label></div><div class="row"><input type="text"  id="cclientever" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Nombre completo</label></div><div class="row"><input type="text" id="ncompletover" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Extension</label></div><div class="row"><input type="text" id="extensionver" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p><p></p></div>
+<div class="row justify-content-md-center">
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Telef.1</label></div><div class="row"><input type="text" id="telefono1ver" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Telef.2</label></div><div class="row"><input type="text" id="telefono2ver" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Codigo</label></div><div class="row"><input type="text" id="codigover" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p><p></p></div>
+<div class="row justify-content-md-center">
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Colegio</label></div><div class="row"><input type="text" id="colegiover" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Grado</label></div><div class="row"><input type="text" id="gradover" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Seccion</label></div><div class="row"><input type="text" id="seccionver" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p><p></p></div>
+<div class="row justify-content-md-center">
+     <p></p>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Sector</label></div><div class="row"><input type="text" id="sectorver" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Grado</label></div><div class="row"><input type="text" id="estadover" readonly></div></div>
+     <div class="col-md-2 offset-md-2"><div class="row"><label>Grupo super</label></div><div class="row"><input type="text" id="gruposuperver" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p><p></p></div>
+<div class="row justify-content-md-center">
+     <p></p>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Apoderado 1</label></div><div class="row"><input type="text" id="nombreap1ver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Telef.</label></div><div class="row"><input type="text" id="telefonoap1ver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Apoderado 2</label></div><div class="row"><input type="text" id="nombreap2ver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Telef.</label></div><div class="row"><input type="text" id="telefonoap2ver" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p><p></p></div>
+<div class="row justify-content-md-center">
+     <p></p>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Fecha de Agenda</label></div><div class="row"><input type="text" id="agendadofver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Hora de Agenda</label></div><div class="row"><input type="text" id="agendadohver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Fecha conf.</label></div><div class="row"><input type="text" id="fechaconfver" readonly></div></div>
+     <div class="col-md-2 offset-md-1"><div class="row"><label>Fecha gestion</label></div><div class="row"><input type="text" id="fechagestionver" readonly></div></div>
+</div>
+<div class="row justify-content-md-center"><p></p></div>
+<div class="row justify-content-md-center">
+    <div class="col-md-11 offset-md-1"><div class="row"><label>Comentario</label></div><div class="row"><input type="text" id="comentariover" style="width: 772px;" readonly></div></div> 
+</div>
+
+</div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <!--button type="button" class="btn btn-primary">Save changes</button-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+                                        
+		</div><!-- panel-body-->
+	</div>
+	<!--/div><panel group-->
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
