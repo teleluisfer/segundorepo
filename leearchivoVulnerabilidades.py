@@ -3,7 +3,7 @@ import json
 import os
 from aplicacionweb1.utils import insertaMysql 
 
-cmd = "python3  GetProblem2.py  ocid1.cloudguardproblem.oc1.sa-saopaulo-1.amaaaaaanla7rtcqy5gfuvv636cayo7vmurojcowudyuu6nfeo2ymlhrfmgq"
+#cmd = "python3  GetProblem2.py  ocid1.cloudguardproblem.oc1.sa-saopaulo-1.amaaaaaanla7rtcqy5gfuvv636cayo7vmurojcowudyuu6nfeo2ymlhrfmgq"
 cmd2 = "oci vulnerability-scanning vulnerability get  --vulnerability-id "
 #r=os.system(cmd)
 

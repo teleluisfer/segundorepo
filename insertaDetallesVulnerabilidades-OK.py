@@ -10,7 +10,8 @@ from conexionMysql import insertaMysqlDetalleVulnerabilidad
 
 idvfile=sys.argv[1]
 
-with open("/home/lsuyo/oracle/resultados-leearchivoVulnerabilidades/"+idvfile, 'r') as fcc_file:
+with open("/home/lsuyo/oracle/resultados-leearchivoVulnerabilidades20250922/"+idvfile, 'r') as fcc_file:
+#with open("/home/lsuyo/oracle/resultados-leearchivoVulnerabilidades/"+idvfile, 'r') as fcc_file:
 #with open('/home/lsuyo/oracle/resultados-leearchivoVulnerabilidades/vulnerabilidad130.txt', 'r') as fcc_file:
     fcc_data = json.load(fcc_file)
     #datito=fcc_data["data"]["items"]

@@ -5,7 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="Dynamicall" content="">
 
 <!-- Syles -->
 <link rel=”hoja de estilo” href=”https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css”rel=”nofollow” integrity=”sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I” crossorigin=”anonymous”>
@@ -25,11 +24,17 @@
 <!--script src="js/bootstrap-table-pagination.js"></script-->
 <!--script src="js/pagination.js"></script-->
 
+<!-- En mi caso añado JQuery para tener más utilidades -->
+<!--script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+<!-- Url del CDN donde está ubicada la librería -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 /*==================================================
  * left tab
  * ===============================================*/
 
+/*
 .no-gutters {
   margin-right: 0;
   margin-left: 0;
@@ -41,9 +46,26 @@
   }
 }
 
+*/
 .espaciobotones {
  margin-right: 8px;
 }
+
+/*
+table{
+  table-layout: fixed;
+}
+*/
+
+/*
+#tabladetallevulnerabilidad th{
+  width: 300px;
+  overflow: auto;
+  border: 1px solid;
+}
+*/
+
+
 
 </style>
 
@@ -55,8 +77,15 @@
 <script language="javascript">
 //window.onload=start
 window.onload=inicio
+//window.onload=grafica
 
 function inicio(){
+        document.getElementById("tbgeneral").innerHTML="";
+        document.getElementById("tbconfer").innerHTML="";
+        document.getElementById("tbdetallesvulnerabilidades").innerHTML="";
+        document.getElementById("tbRepTiemposxAgente").innerHTML="";
+        document.getElementById("tbtodos").innerHTML="";
+        document.getElementById("ulpaginacion").innerHTML="";
 	var a=document.getElementById("divrepgeneral");
         a.style.display = 'none';
 	var b=document.getElementById("divrepconferencia");
@@ -69,6 +98,11 @@ function inicio(){
         e.style.display = 'inline';
 	var f=document.getElementById("divreptotal");
         f.style.display = 'none';
+        var g=document.getElementById("mi-chart-1");
+        g.style.display = 'none';
+        var h=document.getElementById("divdetallesvulnerabilidades");
+        h.style.display = 'none';
+        
 	//Asesores();
 }
 
@@ -473,6 +507,7 @@ function checkReporte(){
 function reportes(){
         document.getElementById("tbgeneral").innerHTML="";
         document.getElementById("tbconfer").innerHTML="";
+        document.getElementById("tbdetallesvulnerabilidades").innerHTML="";
         document.getElementById("tbRepTiemposxAgente").innerHTML="";
         document.getElementById("tbtodos").innerHTML="";
         document.getElementById("ulpaginacion").innerHTML="";
@@ -480,10 +515,12 @@ function reportes(){
         A.style.display = 'none';
         var B=document.getElementById("divrepconferencia");
         B.style.display = 'none';
-        var C=document.getElementById("divtiemposporagente");
+        var C=document.getElementById("divdetallesvulnerabilidades");
         C.style.display = 'none';
-        var D=document.getElementById("divreptotal");
+        var D=document.getElementById("divtiemposporagente");
         D.style.display = 'none';
+        var E=document.getElementById("divreptotal");
+        E.style.display = 'none';
         var programa="";
         var reporte=document.getElementById("reporte").value;
 	//var usu    =document.getElementById("usuario").value;
@@ -494,7 +531,8 @@ function reportes(){
         	  document.getElementById("finales").readOnly = true;
                   var anexo='';
                   console.log("reporte="+reporte);
-                  programa="http://192.168.1.178:8000/consulta1/";
+                  //programa="http://192.168.1.178:8000/consulta1/";
+                  programa="http://10.221.93.147:8000/consulta1/";
                   var a=document.getElementById("divrepconferencia");
                   a.style.display = 'inline';
                   //var sec=document.getElementById("sectores").value;
@@ -503,11 +541,29 @@ function reportes(){
                   var f2=document.getElementById("fecha2").value;
 		  if(f1==''){ f1="2019-06-01";}
 		  if(f2==''){ f2="2022-12-30";}
-                  //console.log("reportes:="+reporte+" sector="+sec);
-                  //console.log("reportes:case 1:fecha1="+f1+" fecha2="+f2);
-		  //compartimento="";
                   $.getJSON(programa,{ }, getRepConferencias );
                   break;
+		case '4':
+                  //document.getElementById("finales").readOnly = true;
+                  graficaPie();
+                  graficaPie2();
+                  var g=document.getElementById("mi-chart-1");
+                  g.style.display = 'inline';
+                  var anexo='';
+                  console.log("reporte="+reporte);
+                  //programa="http://192.168.1.178:8000/detallevulnerabilidad/";
+                  programa="http://10.221.93.147:8000/detallevulnerabilidad/";
+                  var a=document.getElementById("divdetallesvulnerabilidades");
+                  a.style.display = 'inline';
+                  var f1=document.getElementById("fecha1").value;
+                  var f2=document.getElementById("fecha2").value;
+                  if(f1==''){ f1="2019-06-01";}
+                  if(f2==''){ f2="2022-12-30";}
+                  //console.log("reportes:="+reporte+" sector="+sec);
+                  //console.log("reportes:case 1:fecha1="+f1+" fecha2="+f2);
+                  //compartimento="";
+                  $.getJSON(programa,{ }, getDetallesVulnerabilidades );
+                  break;					   
                 case '2':
                   var anexo='';
                   console.log("reporte="+reporte);
@@ -539,10 +595,11 @@ function reportes(){
                   $.getJSON(programa,{ cuenta:anexo ,finales:fin , sectores:sec , usuario:usu , asesores:ase , fecha1:f1, fecha2:f2 }, principal );
                   break;
 		  //break;
-		case '4':
+		case '5':
                   var anexo='';
                   console.log("reporte="+reporte+" , pa="+pa+" li="+li);
-                  programa="reporteria-total.php";
+                  //programa="reporteria-total.php";
+                  programa="";
                   var c=document.getElementById("divreptotal");
                   c.style.display = 'inline';
                   //$.getJSON(programa,{ cuenta:anexo, pagina:pa, limite:li }, principalTodos );
@@ -557,6 +614,86 @@ function reportes(){
         //$.getJSON("reportes-logContactos.php",{ cuenta:anexo }, getReportes1 );
 }
 
+
+function getDetallesVulnerabilidades(json){
+        //var aa=document.getElementById("divrepconferencia");
+        //aa.style.display = 'inline';
+        //var b=document.getElementById("divrepgeneral");
+        //b.style.display = 'none';
+        var tb=document.getElementById("tbdetallesvulnerabilidades");
+        for(i=0 ; i<json.length ; i++){
+                console.log("compartment_id="+json[i].compartment_id);
+                var tr   = document.createElement("tr");
+                var td1  = document.createElement("td");
+		//td1.className="w-25";
+                var td2  = document.createElement("td");
+                var td3  = document.createElement("td");
+                var td4  = document.createElement("td");
+                var td5  = document.createElement("td");
+                var td6  = document.createElement("td");
+                var td7  = document.createElement("td");
+                var td8  = document.createElement("td");
+                var td9  = document.createElement("td");
+                var td10 = document.createElement("td");
+                var tdEditar  = document.createElement("td");
+                var tdChk     = document.createElement("td");
+                var tn1  = document.createTextNode(json[i].authentication);
+                var tn2  = document.createTextNode(json[i].cve_reference);
+                var tn3  = document.createTextNode(json[i].cvss3);
+                var tn4  = document.createTextNode(json[i].impacted_resources_host_count);
+                var tn5  = document.createTextNode(json[i].impacted_resources_image_count);
+                var tn6  = document.createTextNode(json[i].name);
+                var tn7  = document.createTextNode(json[i].severity);
+                var tn8 = document.createTextNode(json[i].state);
+                var tn9  = document.createTextNode(json[i].cve_description);
+                var tn10  = document.createTextNode(json[i].description);
+                var tnEditar  = document.createTextNode("");
+                var check  = document.createElement('input');
+                check.type = "checkbox";
+                check.name = "lista";
+                check.value= json[i].id;
+                check.id   = json[i].id;
+                tr.className="active";
+                td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                td5.appendChild(tn5);
+                td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                tdEditar.appendChild(tnEditar);
+                tdChk.appendChild(check);
+		td1.appendChild(tn1);
+                td2.appendChild(tn2);
+                td3.appendChild(tn3);
+                td4.appendChild(tn4);
+                td5.appendChild(tn5);
+                td6.appendChild(tn6);
+                td7.appendChild(tn7);
+                td8.appendChild(tn8);
+                td9.appendChild(tn9);
+                td10.appendChild(tn10);
+                tdEditar.appendChild(tnEditar);
+                tdChk.appendChild(check);
+                //tr.appendChild(td0);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(tdEditar);
+                tr.appendChild(tdChk);
+                tb.appendChild(tr);
+	}
+}
 
 
 function getRepConferencias(json){
@@ -900,16 +1037,128 @@ $(function(){
 });
 
 
+function grafica(){
+
+    // Obtenemos el contexto del canvas que antes hemos creado
+    let newChart = document.getElementById('mi-chart-1').getContext('2d');
+    baseAmmount=200
+    extraAnualShare=50
+    totalAfter1=60
+    totalAfter5=60
+    totalAfter10=60
+    totalAfter15=60
+    totalAfter20=60
+    totalAfter40=60
+
+    new Chart(newChart, {
+        type: 'line',
+        data: {
+            labels: ['0', 'Año 1', 'Año 5', 'Año 10', 'Año 15', 'Año 20', 'Año 40'],
+            datasets: [
+                {
+                    label: 'Tu inversión inicial (€)',
+                    data: [baseAmmount, baseAmmount, baseAmmount, baseAmmount, baseAmmount, baseAmmount, baseAmmount],
+                    borderColor: ['#FF9999']
+                },
+                {
+                    label: 'Tus inversiones periódicas (€)',
+                    data: [0, extraAnualShare, extraAnualShare*5, extraAnualShare*10, extraAnualShare*15, extraAnualShare*20, extraAnualShare*40],
+                    borderColor: ['#FF9999'],
+                },
+                {
+                    label: 'Capital total (€)',
+                    data: [0, totalAfter1, totalAfter5, totalAfter10, totalAfter15, totalAfter20, totalAfter40],
+                    borderColor: ['#99CC99']
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Evolución de tu capital (€)',
+                },
+            },
+            elements: {
+                line: {
+                    tension: 0.1
+                }
+            }
+        }
+    });
+}
+
+function graficaPie(){
+        const coursesData = { 
+		labels: ['High', 'Medium', 'None', 'Critical', 'Low'], 
+		datasets: [{ 
+			data: [30, 20, 15, 10, 25], 
+			backgroundColor: ['#f32b2b', '#f3952b', '#2bf0f3', '#bf2424', '#f3ee2b'], 
+			}], 
+		}; 
+
+	const config = { 
+		type: 'pie', 
+		data: coursesData, 
+		options: { 
+			plugins: { 
+				title: { 
+					display: true, 
+					text: 'Vulnerabilidades', 
+					}, 
+				}, 
+			}, 
+		}; 
+	const ctx = document.getElementById('mi-chart-1').getContext('2d'); 
+			
+	new Chart(ctx, config); 
+}
+
+function graficaPie2(){
+        const coursesData = { 
+		labels: ['host1', 'host2', 'host3', 'host4', 'host5','host6', 'host7', 'host8', 'host9', 'host10'], 
+		datasets: [{ 
+			data: [30, 20, 15, 10, 25, 12, 3, 50, 33, 20], 
+			backgroundColor: ['#f32b2b', '#f3952b', '#2bf0f3', '#bf2424', '#f3ee2b','#f32b2b', '#f3952b', '#2c51f2', '#bf2424', '#5ff22c'], 
+			}], 
+		}; 
+
+	const config = { 
+		type: 'pie', 
+		data: coursesData, 
+		options: { 
+			plugins: { 
+				title: { 
+					display: true, 
+					text: 'Host mas impactados', 
+					}, 
+				}, 
+			}, 
+		}; 
+	const ctx = document.getElementById('mi-chart-2').getContext('2d'); 
+			
+	new Chart(ctx, config); 
+}
+
 
 </script>
-<title>:: Unicall ::</title>
+<title>:: Oracle SDK ::</title>
 </head>
 <body>
 
 <div class="panel panel-info">
 
   <div class="panel-body">
-	<!--img src="imagenes/unicall-azul.png"/-->
+ 
+	<!--img src="{{ MEDIA_URL }}/Logo-orion-web-color.png" alt="Image description"/>
+
+	<img src="/home/lsuyo/proyectos/entornopython1/djangoproyecto1/templates/Logo-orion-web-color.png"/-->
 
 	<div class="pull-right">
                        <span class="panel-title btn-group">
@@ -963,9 +1212,12 @@ $(function(){
                                         <select class="form-control" id="reporte" name="reporte" onchange="reportes()">
                                         <!--select class="form-control" id="reporte" name="reporte" onchange="checkReporte()"-->
                                         <option disabled="disabled" selected="selected">Seleccionar</option>
-                                        <option value="1">Request summarized problems</option>
+                                        <option value="1">Vulnerabilidades</option>
                                         <option value="2">Request summarized scan ports</option>
                                         <option value="3">List problems</option>
+                                        <option value="4">oci vulnerability-scanning host vulnerability list --compartment-id</option>
+                                        <option value="5">oci vulnerability-scanning vulnerability get  --vulnerability-id</option>
+                                        <option value="6">oci vulnerability-scanning host vulnerability list-impacted-hosts --host-vulnerability-id</option>
                                         </select>
                                 </div>
                         </div>
@@ -987,6 +1239,7 @@ $(function(){
                                         </select>
                                 </div>
                         </div>
+
 
 
 			<!--div class="form-group">
@@ -1037,11 +1290,21 @@ $(function(){
 
 
 
-                        <button class="btn btn-info btn-sm" name="submit1" value="submit1" onclick="reportes()">Buscar</button>
+                        <!--button class="btn btn-info btn-sm" name="submit1" value="submit1" onclick="reportes()">Buscar</button-->
                 <!--/form-->
 	  	</div>
 	  </div>
-	  <div class="col-sm-8"></div>
+
+	  <div class="col-sm-4">
+
+		<canvas id="mi-chart-1" width="100" height="100"></canvas>
+
+	  </div>
+          <div class="col-sm-4">
+
+		<canvas id="mi-chart-2" width="100" height="100"></canvas>
+
+	  </div>
 	</div><!--row -->
 
 
@@ -1215,6 +1478,45 @@ $(function(){
                                 </table>
                         </div>
 </div><!--container -->
+
+<!--===============================REPORTE DE CONFERENCIAS============================================ -->
+
+
+<div id="divdetallesvulnerabilidades" class="container-fluid">
+        <h2>
+        <!--button type="submit" class="btn btn-success btn-sm" name="cambiarVF" value=""  onclick="setVentaConf()">Detalle</button>
+        <button type="submit" class="btn btn-success btn-sm" name="cambiarRU" value=""  onclick="setUsado()">Dashboard</button-->
+        <button   class="btn btn-success btn-sm"  id="exportRepconf" data-export="exportRepconf" autofocus>Exportar a CSV</button>
+        </h2>
+                        <h2></h2>
+                        <p></p>
+                        <div class="table-responsive">
+                                <!--table id="tabladetallevulnerabilidad" class="table table-bordered table-hover table-condensed"-->
+                                <table  class="table table-striped">
+                                        <thead>
+                                                <tr class="info">
+                                                        <!--th>compartment_id</th-->
+                                                        <th>authentication</th>
+                                                        <th width="100px">cve_reference</th>
+                                                        <th>cvss3</th>
+                                                        <th>impacted resources host count</th>
+                                                        <th>impacted resources image count</th>
+							<th>name</th>
+                                                        <th>severity</th>
+                                                        <th>status</th>
+                                                        <th>cve_description</th>
+                                                        <th>description</th>
+                                                        <th>Editar</th>
+                                                        <th><input type="checkbox" onClick="toggle(this)" /> Seleccionar<br/></th>
+                                                </tr>
+                                        </thead>
+                                        <tbody id="tbdetallesvulnerabilidades">
+                                        </tbody>
+                                </table>
+                        </div>
+</div><!--container -->
+
+
 
 <!--===============================REPORTE DE TIEMPOS POR AGENTE============================================ -->
 
