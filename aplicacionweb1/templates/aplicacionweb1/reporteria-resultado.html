@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="./resources/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./resources/css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./resources/css/style.page.css">
-<link rel="stylesheet" href="./resources/flexboxgrid-6.3.1/css/flexboxgrid.min.css" type="text/css">
+<!--link rel="stylesheet" href="./resources/flexboxgrid-6.3.1/css/flexboxgrid.min.css" type="text/css"-->
 
 <!-- para el buscador -->
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
@@ -49,9 +49,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-<script src="./resources/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<!--script src="./resources/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="./resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="./resources/js/jquery.tabletoCSV.js" type="text/javascript"></script>
+<script src="./resources/js/jquery.tabletoCSV.js" type="text/javascript"></script-->
 <script language="javascript">
 //window.onload=start
 window.onload=inicio
@@ -69,7 +69,7 @@ function inicio(){
         e.style.display = 'inline';
 	var f=document.getElementById("divreptotal");
         f.style.display = 'none';
-	Asesores();
+	//Asesores();
 }
 
 function start(){
@@ -486,7 +486,7 @@ function reportes(){
         D.style.display = 'none';
         var programa="";
         var reporte=document.getElementById("reporte").value;
-	var usu    =document.getElementById("usuario").value;
+	//var usu    =document.getElementById("usuario").value;
 	var pa = 1;
 	var li = 6;
         switch(reporte){
@@ -494,19 +494,19 @@ function reportes(){
         	  document.getElementById("finales").readOnly = true;
                   var anexo='';
                   console.log("reporte="+reporte);
-                  programa="reportes-logConferencias.php";
+                  programa="http://192.168.1.178:8000/consulta1/";
                   var a=document.getElementById("divrepconferencia");
                   a.style.display = 'inline';
-                  var sec=document.getElementById("sectores").value;
-                  var ase=document.getElementById("asesores").value;
+                  //var sec=document.getElementById("sectores").value;
+                  //var ase=document.getElementById("asesores").value;
                   var f1=document.getElementById("fecha1").value;
                   var f2=document.getElementById("fecha2").value;
 		  if(f1==''){ f1="2019-06-01";}
 		  if(f2==''){ f2="2022-12-30";}
-                  //alert("reportes: dentro de case:1");
-                  console.log("reportes:="+reporte+" sector="+sec);
-                  console.log("reportes:case 1:fecha1="+f1+" fecha2="+f2);
-                  $.getJSON(programa,{ cuenta:anexo ,sectores:sec ,usuario:usu ,asesores:ase, fecha1:f1, fecha2:f2 }, getRepConferencias );
+                  //console.log("reportes:="+reporte+" sector="+sec);
+                  //console.log("reportes:case 1:fecha1="+f1+" fecha2="+f2);
+		  //compartimento="";
+                  $.getJSON(programa,{ }, getRepConferencias );
                   break;
                 case '2':
                   var anexo='';
@@ -566,8 +566,9 @@ function getRepConferencias(json){
         //b.style.display = 'none';
         var tb=document.getElementById("tbconfer");
         for(i=0 ; i<json.length ; i++){
+		console.log("compartment_id="+json[i].compartment_id);
                 var tr   = document.createElement("tr");
-                var td0  = document.createElement("td");
+                //var td0  = document.createElement("td");
                 var td1  = document.createElement("td");
                 var td2  = document.createElement("td");
                 var td3  = document.createElement("td");
@@ -578,25 +579,21 @@ function getRepConferencias(json){
                 var td8  = document.createElement("td");
                 var td9  = document.createElement("td");
                 var td10 = document.createElement("td");
-                var td11 = document.createElement("td");
-                var td12 = document.createElement("td");
                 var tdEditar  = document.createElement("td");
                 var tdChk     = document.createElement("td");
                 console.log("json.agente="+json[i].agente);
                 console.log("json.fecha="+json[i].fecha);
-                var tn0  = document.createTextNode(json[i].extension);
-                var tn1  = document.createTextNode(json[i].colegio);
-                var tn2  = document.createTextNode(json[i].codigo);
-                var tn3  = document.createTextNode(json[i].ncompleto);
-                var tn4  = document.createTextNode(json[i].fechaconf);
-                var tn5  = document.createTextNode(json[i].finalres);
-                var tn6  = document.createTextNode(json[i].estado);
-                var tn7  = document.createTextNode(json[i].gruposuper);
-                var tn8  = document.createTextNode(json[i].sector);
-                var tn9  = document.createTextNode(json[i].nombre_ap1);
-                var tn10 = document.createTextNode(json[i].telefono_ap1);
-                var tn11 = document.createTextNode(json[i].nombre_ap2);
-                var tn12 = document.createTextNode(json[i].telefono_ap2);
+                //var tn0  = document.createTextNode(json[i].compartment_id);
+                var tn1  = document.createTextNode(json[i].cve_reference);
+                var tn2  = document.createTextNode(json[i].host_count);
+                var tn3  = document.createTextNode(json[i].idv);
+                var tn4  = document.createTextNode(json[i].lifecycle_state);
+                var tn5  = document.createTextNode(json[i].name_cve);
+                var tn6  = document.createTextNode(json[i].severity);
+                var tn7  = document.createTextNode(json[i].state);
+                var tn8  = document.createTextNode(json[i].time_first_detected);
+                var tn9  = document.createTextNode(json[i].time_last_detected);
+                var tn10 = document.createTextNode(json[i].vulnerability_type);
 		var tnEditar  = document.createTextNode("");
 		var check  = document.createElement('input');
 		check.type = "checkbox";
@@ -604,7 +601,7 @@ function getRepConferencias(json){
 		check.value= json[i].id;
 		check.id   = json[i].id;
                 tr.className="active";
-                td0.appendChild(tn0);
+                //td0.appendChild(tn0);
                 td1.appendChild(tn1);
                 td2.appendChild(tn2);
                 td3.appendChild(tn3);
@@ -615,11 +612,9 @@ function getRepConferencias(json){
                 td8.appendChild(tn8);
                 td9.appendChild(tn9);
                 td10.appendChild(tn10);
-                td11.appendChild(tn11);
-                td12.appendChild(tn12);
                 tdEditar.appendChild(tnEditar);
                 tdChk.appendChild(check);
-                tr.appendChild(td0);
+                //tr.appendChild(td0);
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
@@ -630,8 +625,6 @@ function getRepConferencias(json){
                 tr.appendChild(td8);
                 tr.appendChild(td9);
                 tr.appendChild(td10);
-                tr.appendChild(td11);
-                tr.appendChild(td12);
                 tr.appendChild(tdEditar);
                 tr.appendChild(tdChk);
                 tb.appendChild(tr);
@@ -920,14 +913,14 @@ $(function(){
 
 	<div class="pull-right">
                        <span class="panel-title btn-group">
-	                    <button id="usuariooculto"  type="button" class="btn btn-sm"><?php echo $login_session;?></button>
+	                    <!--button id="usuariooculto"  type="button" class="btn btn-sm"><?php echo $login_session;?></button>
 	                    <button id="nlogin" ng-disabled="underCreation" type="button" class="btn btn-sm">
                             <span  class="text-primary"><strong id="tipousuario"><?php echo $tipo_session.": ".$nombre_session; ?></strong></span>
-                            </button>
+                            </button-->
 
                             <button ng-disabled="underCreation" type="button" class="btn btn-default btn-sm" ng-click="addUser()">
                                 <span class="glyphicon glyphicon-user text-primary"></span>
-                                <span class="text-primary"><strong>Usuario:<?php echo $login_session; ?></strong></span>
+                                <span class="text-primary"><strong>Usuario: {{ username }}</strong></span>
                             </button>
                             <button ng-disabled="underCreation" type="button" class="btn btn-default btn-sm" ng-click="addUser()">
                                 <span class="glyphicon glyphicon-off text-primary"></span>
@@ -953,7 +946,7 @@ $(function(){
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-                        <h3 class="panel-title">Reportes:</h3>
+                        <h3 class="panel-title">Reportes</h3>
   		</div>
 		<div class="panel-body">
 
@@ -966,36 +959,37 @@ $(function(){
 			<div class="form-group">
                                 <label for="reporte" class="control-label col-md-4">Reportes:</label>
                                 <div class="col-md-8">
-                                        <select class="form-control" id="reporte" name="reporte">
-                                        <!--select class="form-control" id="reporte" name="reporte" onchange="reportes()"-->
+                                        <!--select class="form-control" id="reporte" name="reporte"-->
+                                        <select class="form-control" id="reporte" name="reporte" onchange="reportes()">
                                         <!--select class="form-control" id="reporte" name="reporte" onchange="checkReporte()"-->
                                         <option disabled="disabled" selected="selected">Seleccionar</option>
-                                        <option value="1">Conferencias</option>
-                                        <option value="2">Tiempos de estado por agente</option>
-                                        <option value="3">Reporte General</option>
-                                        <option value="4">Base completa</option>
+                                        <option value="1">Request summarized problems</option>
+                                        <option value="2">Request summarized scan ports</option>
+                                        <option value="3">List problems</option>
                                         </select>
                                 </div>
                         </div>
 
 			<div class="form-group">
-                                <label for="finales" class="control-label col-md-4">Finales:</label>
+                                <label for="finales" class="control-label col-md-4">Compartimento:</label>
                                 <div class="col-md-8">
                                         <select class="form-control" id="finales" name="finales">
                                         <option selected="selected" value="Todos">Todos</option>
-					<?php
+                                        <option value="cross">Cross</option>
+                                        <option value="sandbox">Sandbox</option>
+					<!--?php
                                                                 $lista=getFinales();
                                                                 for($j=0;$j<count($lista);$j++){
                                                                         echo $lista[$j];
                                                                 }
-                                        ?>
+                                        ?-->
 
                                         </select>
                                 </div>
                         </div>
 
 
-			<div class="form-group">
+			<!--div class="form-group">
                                 <label for="sectores" class="control-label col-md-4">Sectores:</label>
                                 <div class="col-md-8">
                                         <select class="form-control" id="sectores" name="sectores">
@@ -1009,15 +1003,15 @@ $(function(){
 
                                         </select>
                                 </div>
-                        </div>
+                        </div-->
 
-			<div class="form-group">
+			<!--div class="form-group">
                                 <label for="asesores" class="control-label col-md-4">Asesores:</label>
                                 <div class="col-md-8">
                                         <select class="form-control" id="asesores" name="asesores">
                                         </select>
                                 </div>
-                        </div>
+                        </div-->
 
 
                         <div id="divfecha1" class="form-group">
@@ -1034,12 +1028,12 @@ $(function(){
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!--div class="form-group">
                             <label for="usuario" class="control-label col-md-4">Usuario:</label>
                             <div class="col-md-8">
                             <input class="form-control" id="usuario" type="text" name="usuario" value="<?php echo $tipo_session.":". $nombre_session;?>" readonly>
                             </div>
-                        </div>
+                        </div-->
 
 
 
@@ -1201,19 +1195,17 @@ $(function(){
                                 <table id="tablaRepconf" class="table table-bordered table-hover table-condensed">
                                         <thead>
                                                 <tr class="info">
-                                                        <th>Agente</th>
-                                                        <th>Colegio</th>
-                                                        <th>Código</th>
-                                                        <th>Nombre</th>
-                                                        <th>Fecha de conf.</th>
-                                                        <th>Final</th>
-                                                        <th>Estado</th>
-                                                        <th>Grupo</th>
-                                                        <th>Sector</th>
-					        	<th>Nombre apod.1</th>
-			        			<th>Telf. apod.1</th>
-						        <th>Nombre apod.2</th>
-						        <th>Telf. apod.2</th>
+                                                        <!--th>compartment_id</th-->
+                                                        <th>cve_reference</th>
+                                                        <th>host_count</th>
+                                                        <th>idv</th>
+                                                        <th>lifecycle_state</th>
+                                                        <th>name_cve</th>
+                                                        <th>severity</th>
+                                                        <th>state</th>
+                                                        <th>time_first_detected</th>
+					        	<th>time_last_detected</th>
+			        			<th>vulnerability_type</th>
                                                         <th>Editar</th>
 	       						<th><input type="checkbox" onClick="toggle(this)" /> Seleccionar<br/></th>
                                                 </tr>

@@ -1,7 +1,5 @@
 from django import forms
-
 from .models import Post
-
 from crispy_forms.helper import FormHelper
 
 class ContactForm(forms.Form):
@@ -18,3 +16,7 @@ class ContactForm(forms.Form):
         initial = '1',
         required = True,
     )
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=65)
+    password = forms.CharField(max_length=65, widget=forms.PasswordInput)

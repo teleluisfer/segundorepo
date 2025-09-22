@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from aplicacionweb1 import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('aplicacionweb1.urls')),
+    path('admin/', admin.site.urls),
+    path('json-handler/', views.json_handler, name='json_handler'),
 ]
 

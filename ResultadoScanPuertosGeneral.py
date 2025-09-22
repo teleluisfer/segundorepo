@@ -35,14 +35,21 @@ list_host_port_scan_results_response = vulnerability_scanning_client.list_host_p
     is_latest_only=True)
 
 # Get the data from response
-#print(list_host_port_scan_results_response.data)
+print(list_host_port_scan_results_response.data)
 
 ##print(list_host_port_scan_results_response.data.items)
 #listEscaneo.append(list_host_port_scan_results_response.data)
-
-for x in list_host_port_scan_results_response.data.items:
-    print(x.id,":    ",x.open_port_count)
-
+#for x in list_host_port_scan_results_response.data.items:
+#    print(x.id,":    ",x.open_port_count)
 #tcl = type(namedtuple("llavesita",list_host_port_scan_results_response.data))
 #print("tipo de objeto de list_host_port_scan_results_response:",tcl)
+
+
+
+
+
+
+
+#for x in list_host_port_scan_results_response.data.items:
+#    print(x.id,":    ",x.open_port_count)
 
