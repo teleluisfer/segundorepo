@@ -7,8 +7,10 @@ from .models import Post
 from .models import Person
 from .models import consulta1
 from .models import DetalleVulnerabilidad
+from .models import GraficaVulnerabilidades
 
 admin.site.register(Post)
 admin.site.register(Person)
 admin.site.register(consulta1)
 admin.site.register(DetalleVulnerabilidad)
+admin.site.register(GraficaVulnerabilidades)

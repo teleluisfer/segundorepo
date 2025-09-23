@@ -102,6 +102,10 @@ function inicio(){
         g.style.display = 'none';
         var h=document.getElementById("divdetallesvulnerabilidades");
         h.style.display = 'none';
+        var i=document.getElementById("formgrouppie1");
+        i.style.display = 'none';
+        var j=document.getElementById("formgrouppie2");
+        j.style.display = 'none';
         
 	//Asesores();
 }
@@ -545,16 +549,20 @@ function reportes(){
                   break;
 		case '4':
                   //document.getElementById("finales").readOnly = true;
-                  graficaPie();
                   graficaPie2();
+                  verGraficaPieVulnerabilidades();
                   var g=document.getElementById("mi-chart-1");
                   g.style.display = 'inline';
                   var anexo='';
                   console.log("reporte="+reporte);
-                  programa="http://192.168.1.178:8000/detallevulnerabilidad/";
-                  //programa="http://10.221.93.147:8000/detallevulnerabilidad/";
+                  //programa="http://192.168.1.178:8000/detallevulnerabilidad/";
+                  programa="http://10.221.93.147:8000/detallevulnerabilidad/";
                   var a=document.getElementById("divdetallesvulnerabilidades");
                   a.style.display = 'inline';
+                  var b=document.getElementById("formgrouppie1");
+                  b.style.display = 'inline';
+                  var c=document.getElementById("formgrouppie2");
+                  c.style.display = 'inline';
                   var f1=document.getElementById("fecha1").value;
                   var f2=document.getElementById("fecha2").value;
                   if(f1==''){ f1="2019-06-01";}
@@ -616,16 +624,11 @@ function reportes(){
 
 
 function getDetallesVulnerabilidades(json){
-        //var aa=document.getElementById("divrepconferencia");
-        //aa.style.display = 'inline';
-        //var b=document.getElementById("divrepgeneral");
-        //b.style.display = 'none';
         var tb=document.getElementById("tbdetallesvulnerabilidades");
         for(i=0 ; i<json.length ; i++){
                 console.log("compartment_id="+json[i].compartment_id);
                 var tr   = document.createElement("tr");
                 var td1  = document.createElement("td");
-		//td1.className="w-25";
                 var td2  = document.createElement("td");
                 var td3  = document.createElement("td");
                 var td4  = document.createElement("td");
@@ -635,6 +638,7 @@ function getDetallesVulnerabilidades(json){
                 var td8  = document.createElement("td");
                 var td9  = document.createElement("td");
                 var td10 = document.createElement("td");
+                var td11 = document.createElement("td");
                 var tdEditar  = document.createElement("td");
                 var tdChk     = document.createElement("td");
                 var tn1  = document.createTextNode(json[i].authentication);
@@ -645,8 +649,9 @@ function getDetallesVulnerabilidades(json){
                 var tn6  = document.createTextNode(json[i].name);
                 var tn7  = document.createTextNode(json[i].severity);
                 var tn8 = document.createTextNode(json[i].state);
-                var tn9  = document.createTextNode(json[i].cve_description);
-                var tn10  = document.createTextNode(json[i].description);
+                var tn9 = document.createTextNode(json[i].idvulnerabilidad);
+                var tn10  = document.createTextNode(json[i].cve_description);
+                var tn11  = document.createTextNode(json[i].description);
                 var tnEditar  = document.createTextNode("");
                 var check  = document.createElement('input');
                 check.type = "checkbox";
@@ -664,6 +669,7 @@ function getDetallesVulnerabilidades(json){
                 td8.appendChild(tn8);
                 td9.appendChild(tn9);
                 td10.appendChild(tn10);
+                td11.appendChild(tn11);
                 tdEditar.appendChild(tnEditar);
                 tdChk.appendChild(check);
 		td1.appendChild(tn1);
@@ -676,6 +682,7 @@ function getDetallesVulnerabilidades(json){
                 td8.appendChild(tn8);
                 td9.appendChild(tn9);
                 td10.appendChild(tn10);
+                td11.appendChild(tn11);
                 tdEditar.appendChild(tnEditar);
                 tdChk.appendChild(check);
                 //tr.appendChild(td0);
@@ -689,6 +696,7 @@ function getDetallesVulnerabilidades(json){
                 tr.appendChild(td8);
                 tr.appendChild(td9);
                 tr.appendChild(td10);
+                tr.appendChild(td11);
                 tr.appendChild(tdEditar);
                 tr.appendChild(tdChk);
                 tb.appendChild(tr);
@@ -1019,6 +1027,7 @@ function creaPaginacion(tpag,pagina,regxpagina){
 }
 
 
+
 function reporteriaVentafinal(json){}
 
 function setVenta(){}
@@ -1036,6 +1045,70 @@ $(function(){
             });
 });
 
+function verGraficaPieVulnerabilidades(){
+	console.log("");
+        programa="http://10.221.93.147:8000/graficavulnerabilidadriesgos/";
+        $.getJSON(programa,{ }, getGraficaVulnerabilidades );
+}
+function colorPieVulnerabilidades(riesgo){
+        let color="";
+        switch(riesgo){
+                case "NONE":
+                        color="#3bb6b8";
+                        break;
+                case "LOW":
+                        color="#f29b2c";
+                        break;
+                case "MEDIUM":
+                        color="#f29b2c";
+                        break;
+                case "HIGH":
+                        color="#f32b2b";
+                        break;
+                case "CRITICAL":
+                        color="#b83b45";
+                        break;
+        }
+        return color;
+
+}
+function getGraficaVulnerabilidades(json){
+        let cantidad=[];
+        let nombre=[];
+        let colores=[];
+        for(i=0 ; i<json.length ; i++){		               
+                console.log("json.cant_vuln_riesgo="+json[i].cant_vuln_riesgo);
+                console.log("json.nombre_riesgo_vuln="+json[i].nombre_riesgo_vuln);
+                console.log("color="+colorPieVulnerabilidades(json[i].nombre_riesgo_vuln));
+                cantidad[i] = json[i].cant_vuln_riesgo;
+                nombre[i]   = json[i].nombre_riesgo_vuln;
+                colores[i]  = colorPieVulnerabilidades(json[i].nombre_riesgo_vuln);
+        }
+        const coursesData = { 
+		labels: nombre, 
+		datasets: [{ 
+			data: cantidad, 
+			backgroundColor: colores, 
+			}], 
+		}; 
+
+	const config = { 
+		type: 'pie', 
+		data: coursesData, 
+		options: { 
+			plugins: { 
+				title: { 
+					display: true, 
+					text: 'Vulnerabilidades', 
+					}, 
+				}, 
+			}, 
+		}; 
+	const ctx = document.getElementById('mi-chart-1').getContext('2d'); 
+			
+	new Chart(ctx, config); 
+
+}
 
 function grafica(){
 
@@ -1225,47 +1298,26 @@ function graficaPie2(){
 			<div class="form-group">
                                 <label for="finales" class="control-label col-md-4">Compartimento:</label>
                                 <div class="col-md-8">
-                                        <select class="form-control" id="finales" name="finales">
-                                        <option selected="selected" value="Todos">Todos</option>
-                                        <option value="cross">Cross</option>
-                                        <option value="sandbox">Sandbox</option>
-					<!--?php
-                                                                $lista=getFinales();
-                                                                for($j=0;$j<count($lista);$j++){
-                                                                        echo $lista[$j];
-                                                                }
-                                        ?-->
-
+                                        <select class="form-control" id="finales" name="finales" aria-readonly="true">
+                                        <option selected="selected" value="tenant">pluzoci (root)</option>                                   
+                                        
                                         </select>
                                 </div>
                         </div>
 
-
-
-			<!--div class="form-group">
-                                <label for="sectores" class="control-label col-md-4">Sectores:</label>
+                        <div class="form-group">
+                                <label for="finales" class="control-label col-md-4">Severidad:</label>
                                 <div class="col-md-8">
-                                        <select class="form-control" id="sectores" name="sectores">
-                                        <option selected="selected" value="Todos">Todos</option>
-                                        <?php
-                                                                $lista=getSectoresActivos();
-                                                                for($j=0;$j<count($lista);$j++){
-                                                                        echo $lista[$j];
-                                                                }
-                                        ?>
-
+                                        <select class="form-control" id="finales" name="finales" aria-readonly="true">
+                                        <option selected="selected" value="TODOS">Todos</option>                                   
+                                        <option value="NONE">None</option>
+                                        <option value="LOW">Low</option>
+                                        <option value="MEDIUM">Medium</option>
+                                        <option value="HIGH">High</option>
+                                        <option value="CRITICAL">Critical</option>
                                         </select>
                                 </div>
-                        </div-->
-
-			<!--div class="form-group">
-                                <label for="asesores" class="control-label col-md-4">Asesores:</label>
-                                <div class="col-md-8">
-                                        <select class="form-control" id="asesores" name="asesores">
-                                        </select>
-                                </div>
-                        </div-->
-
+                        </div>
 
                         <div id="divfecha1" class="form-group">
                             <label for="fecha1" class="control-label col-md-4">Fecha inicial:</label>
@@ -1296,12 +1348,32 @@ function graficaPie2(){
 	  </div>
 
 	  <div class="col-sm-4">
-
-		<canvas id="mi-chart-1" width="100" height="100"></canvas>
+		<div id="formgrouppie1" class="form-group"> 
+                	<button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">120</span> Vulnerabilidades 
+	                </button>
+	                <button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">86</span> Notification 2
+	                </button>
+	                <button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">61</span> Notification 3 
+	                </button>
+		</div>
+		<canvas id="mi-chart-1" width="80" height="80"></canvas>
 
 	  </div>
           <div class="col-sm-4">
-
+		<div id="formgrouppie2" class="form-group"> 
+	                <button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">120</span> Vulnerabilidades 
+	                </button>
+	                <button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">86</span> Notification 2
+	                </button>
+	                <button type="button" class="btn btn-primary">
+	                <span class="badge badge-light">61</span> Notification 3 
+	                </button>
+		</div>
 		<canvas id="mi-chart-2" width="100" height="100"></canvas>
 
 	  </div>
@@ -1504,6 +1576,7 @@ function graficaPie2(){
 							<th>name</th>
                                                         <th>severity</th>
                                                         <th>status</th>
+                                                        <th>id_vulnerabilidad</th>
                                                         <th>cve_description</th>
                                                         <th>description</th>
                                                         <th>Editar</th>

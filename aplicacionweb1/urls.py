@@ -6,6 +6,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'consulta1',views.consulta1ViewSet)
 router.register(r'detallevulnerabilidad',views.DetalleVulnerabilidadViewSet)
+router.register(r'graficavulnerabilidadriesgos',views.GraficaVulnerabilidadesViewSet)
 
 
 urlpatterns = [

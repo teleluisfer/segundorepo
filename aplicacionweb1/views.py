@@ -18,8 +18,10 @@ from .utils import leeMysql
 from rest_framework import viewsets
 from .serializer import consulta1Serializer
 from .serializer import DetalleVulnerabilidadSerializer
+from .serializer import GraficaVulnerabilidadesSerializer
 from .models import consulta1
 from .models import DetalleVulnerabilidad
+from .models import GraficaVulnerabilidades
 
 
 #ejemplos basicos
@@ -149,3 +151,8 @@ class consulta1ViewSet(viewsets.ModelViewSet):
 class DetalleVulnerabilidadViewSet(viewsets.ModelViewSet):
     queryset = DetalleVulnerabilidad.objects.all()
     serializer_class = DetalleVulnerabilidadSerializer
+
+class GraficaVulnerabilidadesViewSet(viewsets.ModelViewSet):
+    queryset = GraficaVulnerabilidades.objects.all()
+    serializer_class = GraficaVulnerabilidadesSerializer
+

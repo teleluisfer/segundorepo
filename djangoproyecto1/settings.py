@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
-GLOBAL_VARIABLE_IP = "192.168.1.178"
-#GLOBAL_VARIABLE = "10.221.93.147"
+#GLOBAL_VARIABLE_IP = "192.168.1.178"
+GLOBAL_VARIABLE_IP = "10.221.93.147"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -74,4 +74,7 @@ class DetalleVulnerabilidad(models.Model):
     vulnerability_reference = models.CharField(max_length=50)  
     vulnerability_type = models.CharField(max_length=20)
 
-    
+class GraficaVulnerabilidades(models.Model):
+    cant_vuln_riesgo = models.PositiveSmallIntegerField()
+    nombre_riesgo_vuln = models.CharField(max_length=30)
+
