@@ -551,8 +551,8 @@ function reportes(){
                   g.style.display = 'inline';
                   var anexo='';
                   console.log("reporte="+reporte);
-                  //programa="http://192.168.1.178:8000/detallevulnerabilidad/";
-                  programa="http://10.221.93.147:8000/detallevulnerabilidad/";
+                  programa="http://192.168.1.178:8000/detallevulnerabilidad/";
+                  //programa="http://10.221.93.147:8000/detallevulnerabilidad/";
                   var a=document.getElementById("divdetallesvulnerabilidades");
                   a.style.display = 'inline';
                   var f1=document.getElementById("fecha1").value;
@@ -1155,10 +1155,10 @@ function graficaPie2(){
 <div class="panel panel-info">
 
   <div class="panel-body">
- 
-	<!--img src="{{ MEDIA_URL }}/Logo-orion-web-color.png" alt="Image description"/>
 
-	<img src="/home/lsuyo/proyectos/entornopython1/djangoproyecto1/templates/Logo-orion-web-color.png"/-->
+	{% load static %}
+	<img src="{% static 'aplicacionweb1/Logo-orion-web-color.png' %}" alt="My image" width="10%" height="10%">
+
 
 	<div class="pull-right">
                        <span class="panel-title btn-group">

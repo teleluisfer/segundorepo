@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+GLOBAL_VARIABLE_IP = "192.168.1.178"
+#GLOBAL_VARIABLE = "10.221.93.147"
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +33,8 @@ ALLOWED_HOSTS = ['192.168.1.178','127.0.0.1','localhost','10.0.2.15','10.221.93.
 
 
 # Application definition
+
+STATIC_URL = "static/"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,7 +96,7 @@ DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.mysql',
         #'HOST':'192.168.1.178',
-        'HOST':'10.221.93.147',
+        'HOST':GLOBAL_VARIABLE_IP,
         'PORT':'3306',
         'USER':'root',
         'PASSWORD':'lsuy0',
@@ -146,10 +151,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'aplicacionweb1.CustomUser'
 
-#MEDIA_ROOT = '/home/lsuyo/proyectos/entornopython1/djangoproyecto1/aplicacionweb1/templates/aplicacionweb1/imagenes'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-#MEDIA_URL = '/imagenes/'
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/templates/'
-MEDIA_URL = '/media/'
